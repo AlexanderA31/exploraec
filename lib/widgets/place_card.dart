@@ -40,12 +40,13 @@ class PlaceCard extends StatelessWidget {
 
   Widget _buildContenido(BuildContext context) {
     final estilos = Theme.of(context).textTheme;
+    final colores = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.place, size: 32, color: AppTheme.colorPrimario),
+          Icon(Icons.place, size: 32, color: colores.primary),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Column(
@@ -57,7 +58,7 @@ class PlaceCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: AppSpacing.xs),
-                Text(place.categoria, style: estilos.bodySmall?.copyWith(color: Colors.grey.shade600)),
+                Text(place.categoria, style: estilos.bodySmall?.copyWith(color: colores.onSurfaceVariant)),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   place.descripcion,

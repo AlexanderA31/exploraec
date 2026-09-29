@@ -20,6 +20,9 @@ class ExploraEcApp extends StatelessWidget {
       // y espaciado propios de ExploraEC en toda la app de una sola vez,
       // sin tener que repetir estilos pantalla por pantalla.
       theme: AppTheme.theme,
+      // Paso 6 (opcional) -- modo oscuro que sigue la configuración del sistema.
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       home: const RootShell(),
     );
   }

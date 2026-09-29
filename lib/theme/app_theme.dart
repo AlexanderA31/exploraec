@@ -52,6 +52,44 @@ class AppTheme {
       ),
     );
   }
+
+  /// Tema oscuro (Paso 6, opcional): misma semilla teal con
+  /// Brightness.dark. La AppBar conserva el navy de marca; el resto de
+  /// colores sale del ColorScheme para que el texto se lea sobre fondo oscuro.
+  static ThemeData get darkTheme {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: teal,
+      brightness: Brightness.dark,
+      secondary: orange,
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: colorScheme,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: navy,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        bodyMedium: TextStyle(fontSize: 14),
+        bodySmall: TextStyle(fontSize: 12),
+      ),
+      cardTheme: CardThemeData(
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
+          minimumSize: const Size(48, 48), // tamaño mínimo de toque accesible
+        ),
+      ),
+    );
+  }
 }
 
 /// Constantes de espaciado — un único lugar para los valores de `EdgeInsets`
