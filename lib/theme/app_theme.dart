@@ -53,14 +53,16 @@ class AppTheme {
     );
   }
 
-  /// Tema oscuro (Paso 6, opcional): misma semilla teal con
-  /// Brightness.dark. La AppBar conserva el navy de marca; el resto de
-  /// colores sale del ColorScheme para que el texto se lea sobre fondo oscuro.
+  /// Tema oscuro (Paso 6, opcional). Misma semilla teal que `theme`, pero con
+  /// `Brightness.dark`: Flutter genera la paleta oscura completa y cada widget
+  /// que consulta `Theme.of(context)` la toma sin cambiar una sola línea.
+  /// A propósito NO fija colores de texto ni de fondo — los que fijaba `theme`
+  /// (navy sobre blanco) serían ilegibles sobre un fondo oscuro.
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: teal,
-      brightness: Brightness.dark,
       secondary: orange,
+      brightness: Brightness.dark,
     );
 
     return ThemeData(
@@ -70,12 +72,6 @@ class AppTheme {
         backgroundColor: navy,
         foregroundColor: Colors.white,
         elevation: 0,
-      ),
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        bodyMedium: TextStyle(fontSize: 14),
-        bodySmall: TextStyle(fontSize: 12),
       ),
       cardTheme: CardThemeData(
         elevation: 1,

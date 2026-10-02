@@ -10,19 +10,18 @@ class EmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colores = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icono, size: 56, color: colores.outline),
+            Icon(icono, size: 56, color: Theme.of(context).colorScheme.outline),
             const SizedBox(height: AppSpacing.md),
             Text(
               mensaje,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: colores.onSurfaceVariant),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ),
