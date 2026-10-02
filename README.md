@@ -18,6 +18,22 @@ Código base tomado del repositorio de referencia `Patricio-CEDIA/exploraec-app`
 - Paso 5: `Semantics` en `PlaceCard` con `excludeSemantics: true`.
 - Paso 6 (opcional): `darkTheme: AppTheme.darkTheme` + `themeMode: ThemeMode.system`.
 
+## Sesión 4 — PlacesController compartido con GetX
+
+- Paso 2: `cargarLugares()` llama a `fetchLugaresSimulado` con `try`/`catch` y los 3 estados.
+- Paso 3: `HomeScreen` es `GetView<PlacesController>` con `body: Obx(...)`; sin `StatefulWidget` ni recarga manual.
+- Paso 4: navegación con `Get.to` / `Get.back` (no queda `Navigator.push`).
+- Paso 5: estado derivado `total` (título `ExploraEC (N)`), `Get.snackbar('Lugar agregado', ...)` y worker `ever(estado, ...)`.
+- Paso 6 (opcional): favoritos en memoria compartidos con la pestaña Favoritos e idioma español/inglés con `Get.updateLocale`.
+
+## Sesión 5 — Mapas y geolocalización
+
+- Paso 2: permisos de ubicación en `AndroidManifest.xml` e `Info.plist`.
+- Paso 3: `Geolocator.checkPermission()` / `requestPermission()` en `LocationService`.
+- Paso 4: `MarkerLayer` con la posición del usuario y un marcador por lugar (`flutter_map` + OpenStreetMap).
+- Paso 5: distancia real en el Detalle al llegar desde un marcador.
+- Paso 7 (opcional): botón «Centrar en mi ubicación» (`mapController.move`) y distancia en las tarjetas de Inicio.
+
 ## Ejecutar
 
 ```bash
