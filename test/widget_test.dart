@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import 'package:exploraec/main.dart';
+import 'package:exploraec/services/settings_service.dart';
 import 'package:exploraec/widgets/empty_view.dart';
 import 'package:exploraec/widgets/error_view.dart';
 import 'package:exploraec/widgets/loading_view.dart';
@@ -34,6 +38,13 @@ Future<void> _simular(WidgetTester tester, String opcion) async {
 }
 
 void main() {
+  // Igual que `main()` de la app: Hive con las cajas abiertas antes de
+  // construir `ExploraEcApp` (aquí en una carpeta temporal).
+  setUpAll(() async {
+    Hive.init(Directory.systemTemp.createTempSync('hive_widgets').path);
+    await Hive.openBox<Map>('favoritos');
+    await SettingsService.abrir();
+  });
   tearDown(Get.reset);
 
   testWidgets('Inicio muestra carga y luego la lista con el contador', (tester) async {
@@ -96,18 +107,6 @@ void main() {
     expect(find.text('ExploraEC (6)'), findsOneWidget);
   });
 
-  testWidgets('Favoritos se comparten entre Inicio y la pestaña Favoritos', (tester) async {
-    await _abrirApp(tester);
-
-    await tester.tap(find.byIcon(Icons.favorite_border).first);
-    await tester.pumpAndSettle();
-    expect(find.byIcon(Icons.favorite), findsWidgets);
-
-    await tester.tap(find.text('Favoritos'));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('Favoritos marcados: 1'), findsOneWidget);
-  });
-
   testWidgets('El formulario vacío muestra los 3 errores de validación', (tester) async {
     await _abrirApp(tester);
 
@@ -138,5 +137,21 @@ void main() {
     expect(find.byType(LoadingView), findsNothing); // sin recarga
     expect(find.text('Lugar agregado'), findsOneWidget);
     await _cerrarAvisos(tester);
+  });
+
+  // Último: deja una escritura de Hive en curso (E/S real).
+  testWidgets('Un favorito se guarda en Hive y aparece en la pestaña Favoritos', (tester) async {
+    await _abrirApp(tester);
+
+    await tester.tap(find.byIcon(Icons.favorite_border).first);
+    await tester.pumpAndSettle();
+    // La escritura de Hive es E/S real: se le da tiempo real para terminar.
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 300)));
+    expect(find.byIcon(Icons.favorite), findsWidgets);
+    expect(Hive.box<Map>('favoritos').containsKey('1'), isTrue);
+
+    await tester.tap(find.text('Favoritos').last);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(PlaceCard, 'Parque El Ejido'), findsOneWidget);
   });
 }
