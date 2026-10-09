@@ -79,10 +79,6 @@ class _MapScreenState extends State<MapScreen> {
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'com.tmo.exploraec',
         ),
-        // Por qué: sin marcadores el mapa se ve pero no comunica nada —
-        // el bloque real agrega uno para la posición del usuario y uno
-        // por cada Place que expone el controller, cada uno navegando al
-        // Detalle (con la distancia ya calculada) al tocarlo.
         MarkerLayer(
           markers: [
             Marker(
