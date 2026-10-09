@@ -34,9 +34,33 @@ Código base tomado del repositorio de referencia `Patricio-CEDIA/exploraec-app`
 - Paso 5: distancia real en el Detalle al llegar desde un marcador.
 - Paso 7 (opcional): botón «Centrar en mi ubicación» (`mapController.move`) y distancia en las tarjetas de Inicio.
 
+## Sesión 6 — Gastos del viaje desde el backend
+
+- Paso 5: permiso `INTERNET` y `android:usesCleartextTraffic="true"` en `AndroidManifest.xml` (solo desarrollo).
+- Paso 7: `GastosController.entrar()` (registro → login con formulario → listar) y `cargarGastos()` con los 3 estados.
+- Pasos 8 y 9: errores legibles (sin conexión, 401, 422, tiempo agotado); el timeout quedó en 15 s.
+- Paso 10 (opcional): deslizar para actualizar con `RefreshIndicator`.
+
+## Sesión 7 — Persistencia local con Hive
+
+- Paso 2: `cargarGastos()` usa `GastosRepository` (servidor primero, caché `gastos_<id>` por usuario) y banner «Sin conexión».
+- Paso 3: favoritos de lugares guardados en la caja `favoritos`.
+- Paso 5: `salir()` borra la caja del usuario (`_repository.vaciar()`); el token nunca se guarda en Hive.
+- Paso 6 (opcional): idioma guardado en la caja `ajustes`.
+
+## Sesión 8 — Autenticación segura y CRUD completo
+
+- `ApiClient` con `dio` e interceptores (token y 401); token en `flutter_secure_storage`.
+- `AuthController`: iniciar sesión, registrar (con validación), restaurar sesión y cerrar sesión que borra token, lista y caja.
+- Crear, editar y eliminar gastos (con confirmación) y mensajes del servidor (límite de 500 por categoría).
+- Paso 9 (opcional): cambiar contraseña.
+
 ## Ejecutar
 
 ```bash
 flutter pub get
-flutter run
+flutter run                                              # emulador Android: backend en http://10.0.2.2:8000
+flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8000
 ```
+
+El backend de gastos es otro repositorio (`cj-murillo/proyecto-curso-spec-kit`) y se levanta aparte; su `.env` no se sube.
