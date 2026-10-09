@@ -5,8 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import 'package:exploraec/controllers/auth_controller.dart';
 import 'package:exploraec/main.dart';
+import 'package:exploraec/services/api_client.dart';
 import 'package:exploraec/services/settings_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:exploraec/widgets/empty_view.dart';
 import 'package:exploraec/widgets/error_view.dart';
 import 'package:exploraec/widgets/loading_view.dart';
@@ -44,6 +47,13 @@ void main() {
     Hive.init(Directory.systemTemp.createTempSync('hive_widgets').path);
     await Hive.openBox<Map>('favoritos');
     await SettingsService.abrir();
+  });
+  // Igual que `main()` desde la Sesión 8: un `ApiClient` y un `AuthController`
+  // antes de `runApp`; el almacenamiento seguro arranca sin token guardado.
+  setUp(() {
+    FlutterSecureStorage.setMockInitialValues({});
+    Get.put(ApiClient(), permanent: true);
+    Get.put(AuthController(), permanent: true);
   });
   tearDown(Get.reset);
 
