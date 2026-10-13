@@ -55,6 +55,20 @@ Código base tomado del repositorio de referencia `Patricio-CEDIA/exploraec-app`
 - Crear, editar y eliminar gastos (con confirmación) y mensajes del servidor (límite de 500 por categoría).
 - Paso 9 (opcional): cambiar contraseña.
 
+## Sesión 9 — Asistente ExploraIA
+
+- Pestaña «Asistente»: pide el resumen por categoría al backend y lo envía al proxy (`mock-server/`) con la pregunta (Paso 4).
+- Confirmación humana antes de registrar un gasto propuesto por la IA (Paso 5); el backend valida (límite de 500).
+- La app no lleva ninguna clave de IA: `GEMINI_API_KEY` vive solo en el entorno del proxy (sin ella, modo de reglas).
+- Paso 8: el proxy pide el resumen al MCP del backend (`resumen_gastos`) con el token de la persona; `node mock-server/probar-e2e.js <correo> <contraseña>` da 4 ✅.
+- Paso 9 (opcional): preguntas sugeridas.
+
+```bash
+cd mock-server
+node mock-server.js                         # modo REGLAS (sin clave)
+$env:GEMINI_API_KEY="tu-clave"; node mock-server.js   # modo GEMINI (PowerShell)
+```
+
 ## Ejecutar
 
 ```bash
