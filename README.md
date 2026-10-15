@@ -55,6 +55,16 @@ Código base tomado del repositorio de referencia `Patricio-CEDIA/exploraec-app`
 - Crear, editar y eliminar gastos (con confirmación) y mensajes del servidor (límite de 500 por categoría).
 - Paso 9 (opcional): cambiar contraseña.
 
+## Sesión 10 — Calidad, CI/CD y código con agentes de IA
+
+- Errores no controlados capturados en un solo lugar (`ReporteErrores.instalar()`), sin tokens en los registros.
+- Pruebas de widgets (`test/sesion_10_test.dart`) y auditoría de secretos (`.env`, `.claude/settings.local.json` y `CLAUDE.local.md` ignorados).
+- CI en GitHub Actions (`.github/workflows/ci.yml`): analiza y prueba en cada push y pull request.
+- Arnés del agente: `AGENTS.md` (con reglas propias), `CLAUDE.md` y permisos en `.claude/settings.json` (más un hook de formateo opcional).
+- Filtro de gastos por categoría escrito por un agente de código, con su prueba (`test/filtro_gastos_test.dart`), integrado con un pull request.
+- Release `v1.0.0` con el APK compilado por `.github/workflows/release-apk.yml`.
+- Paso 10 (opcional): «Acerca de» con las licencias de los paquetes.
+
 ## Sesión 9 — Asistente ExploraIA
 
 - Pestaña «Asistente»: pide el resumen por categoría al backend y lo envía al proxy (`mock-server/`) con la pregunta (Paso 4).
