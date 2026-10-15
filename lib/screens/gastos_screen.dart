@@ -103,15 +103,46 @@ class GastosScreen extends GetView<GastosController> {
                   ),
                 ],
               ),
+            _buildFiltro(),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: controller.cargarGastos,
-                child: _buildLista(context, controller.gastos),
+                child: _buildLista(context, controller.gastosFiltrados),
               ),
             ),
           ],
         );
       }),
+    );
+  }
+
+  /// Fila de chips para filtrar la lista: «Todas» y una opción por cada
+  /// categoría que aparece en los gastos. El estado vive en el controlador.
+  Widget _buildFiltro() {
+    final categorias = controller.categoriasEnGastos;
+    final elegida = controller.categoriaFiltro.value;
+    final todas = elegida == null || !categorias.contains(elegida);
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
+      child: Row(
+        children: [
+          ChoiceChip(
+            label: const Text('Todas'),
+            selected: todas,
+            onSelected: (_) => controller.filtrarPor(null),
+          ),
+          for (final categoria in categorias)
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: ChoiceChip(
+                label: Text(categoria),
+                selected: elegida == categoria,
+                onSelected: (_) => controller.filtrarPor(categoria),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
