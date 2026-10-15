@@ -112,7 +112,8 @@ void main() {
     await tester.tap(find.text('Museo Casa del Alabado'));
     await tester.pumpAndSettle();
     expect(find.textContaining('arte precolombino'), findsOneWidget);
-    await tester.pageBack();
+    // El tooltip del botón atrás ahora sale en español (flutter_localizations).
+    await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('ExploraEC (6)'), findsOneWidget);
   });
